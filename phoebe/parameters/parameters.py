@@ -207,7 +207,7 @@ _forbidden_labels += ['requiv', 'requiv_max', 'requiv_min', 'teff', 'abun', 'log
                       'ld_coeffs_source_bol', 'ld_coeffs_bol',
                       'mass', 'dpdt', 'per0',
                       'dperdt', 'ecc', 'deccdt', 't0_perpass', 't0_supconj',
-                      't0_ref', 'mean_anom', 'q', 'sma', 'asini', 'ecosw', 'esinw',
+                      't0_ref', 'mean_anom', 'q', 'sma', 'asini', 'cosi', 'ecosw', 'esinw',
                       'teffratio', 'requivratio', 'requivsumfrac'
                       ]
 

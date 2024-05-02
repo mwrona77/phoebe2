@@ -102,6 +102,7 @@ def orbit(component, **kwargs):
 
     constraints = []
     constraints += [(constraint.asini, component)]
+    constraints += [(constraint.cosi, component)]
     constraints += [(constraint.t0_perpass_supconj, component)]
     constraints += [(constraint.t0_ref_supconj, component)]
     constraints += [(constraint.period_anom, component)]

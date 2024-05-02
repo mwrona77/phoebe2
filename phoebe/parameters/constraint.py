@@ -363,6 +363,38 @@ def asini(b, orbit, solve_for=None):
     #- return lhs, rhs, args_as_pss
     return lhs, rhs, [], {'orbit': orbit}
 
+_validsolvefor['cosi'] = ['cosi', 'incl']
+def cosi(b, orbit, solve_for=None):
+    orbit_ps = _get_system_ps(b, orbit)
+
+    # We want to get the parameters in THIS orbit, but calling through
+    # the bundle in case we need to create it.
+    # To do that, we need to know the search parameters to get items from this PS.
+    metawargs = orbit_ps.meta
+    metawargs.pop('qualifier')
+
+    # Now we'll define the parameters in case they don't exist and need to be created
+    incl_def = FloatParameter(qualifier='incl', latexfmt=r'a_\mathrm{{ {component} }}', value=90.0, default_unit=u.deg, description='Orbital inclination angle')
+    cosi_def = FloatParameter(qualifier='cosi', latexfmt=r'\cos i\mathrm{{ {component} }}', value=0.0, default_unit=u.dimensionless_unscaled, description='Cosine of inclination angle')
+
+    # And now call get_or_create on the bundle
+    cosi, created = b.get_or_create('cosi', cosi_def, **metawargs)
+    incl, created = b.get_or_create('incl', incl_def, **metawargs)
+
+    if solve_for in [None, cosi]:
+        lhs = cosi
+        rhs = cos(incl)
+
+    elif solve_for == incl:
+        lhs = incl
+        rhs = arccos(cosi)
+
+    else:
+        raise NotImplementedError
+
+    #- return lhs, rhs, args_as_pss
+    return lhs, rhs, [], {'orbit': orbit}
+
 _validsolvefor['esinw'] = ['esinw', 'ecc', 'per0', 'ecosw']
 def esinw(b, orbit, solve_for=None, **kwargs):
     """
